@@ -214,10 +214,11 @@ a:hover {
 }
 
 .shadow-right {
-    -webkit-animation: book 2s ease-in-out infinite;
-    animation: book 2s ease-in-out infinite;
+    -webkit-animation: shadowRight 1.3s ease-in-out infinite;
+    animation: shadowRight 1.3s ease-in-out infinite;
 }
-@-webkit-keyframes book {
+
+@-webkit-keyframes shadowRight {
   25% {
     box-shadow: inset rgba(0,0,0,.2) 0px 0 50px -140px;
   }
@@ -229,7 +230,7 @@ a:hover {
   }
 }
 
-@keyframes book {
+@keyframes shadowRight {
   25% {
     box-shadow: inset rgba(0,0,0,.2) 0px 0 50px -140px;
   }
@@ -238,6 +239,37 @@ a:hover {
   }
   100% {
     box-shadow: inset rgba(0,0,0,.2) 510px 0 50px -140px;
+  }
+}
+
+
+
+.shadow-left {
+    -webkit-animation: shadowLeft 1.3s ease-in-out infinite;
+    animation: shadowLeft 1.3s ease-in-out infinite;
+}
+
+@-webkit-keyframes shadowLeft {
+  25% {
+    box-shadow: inset rgba(0,0,0,.2) 0px 0 50px -140px;
+  }
+  50% {
+    box-shadow: inset rgba(0,0,0,.2) 0px 0 50px -140px;
+  }
+  100% {
+    box-shadow: inset rgba(0,0,0,.2) 510px 0 50px -140px;
+  }
+}
+
+@keyframes shadowLeft {
+  25% {
+    box-shadow: inset rgba(0,0,0,.2) 0px 0 50px -140px;
+  }
+  50% {
+    box-shadow: inset rgba(0,0,0,.2) 0px 0 50px -140px;
+  }
+  100% {
+    box-shadow: inset rgba(0,0,0,.2) 1510px 0 50px -140px;
   }
 }
 
