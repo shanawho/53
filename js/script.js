@@ -2,90 +2,57 @@ window.onload = function() {
     var count = 0;
     var nextLink = document.getElementById('next');
     var prevLink = document.getElementById('prev');
-    var justFlippedRight = true;
+    var flipIdExists = true;
   
-  nextLink.addEventListener('click', function() {
+    nextLink.addEventListener('click', function() {
 
-    if (count < 14) {
-        /* If it is one of the 15 pages available */
+        if (count < 14) {
+            /* If it is one of the 15 pages available */
 
-        if (justFlippedRight) {
-            var flip = document.getElementById('flip');
-        } else {
-            /* If flip-back exists, replace with a flip id for forward flip animation */
+            if (flipIdExists) {
+                var flip = document.getElementById('flip');
+            } else {
+                /* #flip doesn't exist, so get #flip-back instead */
+                var flip = document.getElementById('flip-back');
+            }
 
-            var flip = document.getElementById('flip-back');
+            /*  flip to the next page */
             flip.id = 'flip';
+            flip.setAttribute('class', 'flip-on-click');
+            /* animation will stay on last frame so page stays on the left */
 
-            /*  Change image on front to match what used to be the image of the right 
-                Applying the flip classes immediately places the div on the right 
-                so we have to make it appear seamless */
+            /*  replace the DOM element so the animation can rerun in case flip is clicked again */
+            var elm = flip;
+            var newone = elm.cloneNode(true);
+            elm.parentNode.replaceChild(newone, elm);
 
-            var front = document.getElementById('front');
-            front.setAttribute('class', 'front'+count);
+            /* reassign images for the next flip */
+            document.getElementById('left').setAttribute('class', 'left'+count);
+            document.getElementById('front').setAttribute('class', 'front'+count);
+            document.getElementById('back').setAttribute('class', 'back'+count);
+            document.getElementById('right').setAttribute('class', 'right'+count);
+
+            /* The images already start out on the right count, 
+            so we want to increment the count AFTER we set class attributes */
+            count = count + 1;
+
+            /* You just flipped to the next page! 
+               Keep track of it in this boolean so we can check to see if #flip or #flip-back 
+               is present when we click either next or previous */
+            flipIdExists = true;
         }
-
-
-        /*  Replace the back of the flip page and right book images so that when the flip starts, they contain the right images */
-
-        var back = document.getElementById('back');
-        var right = document.getElementById('right');
-        back.setAttribute('class', 'back'+count);
-        right.setAttribute('class', 'right'+count);
-
-        /*  flip to the next page */
-        flip.setAttribute('class', 'flip-on-click');
-        /* animation will stay on last frame so page stays on the left */
-
-        /*  add a shadow to the left book so that when the flip occurs, a shadow appears */
-        var left = document.getElementById('left');
-        left.className += ' shadow-left';
-
-        /*  replace the DOM element so the animation can rerun in case flip is clicked again */
-        var elm = flip;
-        var newone = elm.cloneNode(true);
-        elm.parentNode.replaceChild(newone, elm);
-
-        /*  new next page yay! increment your count */
-        count = count + 1;
-
-
-        /*  We might not have initialized front in the above if/else conditional, 
-            so initialize it here */
-        var front = document.getElementById('front');
-
-        setTimeout(function(){
-            /*  Wait till flip occurs (2s), then replace the left and front images.
-                Even though they are not visible right now, we are prepping for 
-                another click on next, so that the correct images are already there */
-            left.className = "";
-            left.className += ' left'+count;
-            front.setAttribute('class', 'front'+count);
-        }, 2000);
-
-        /* You just flipped to the next page! 
-           Keep track of it in this boolean so we can check to see if #flip or #flip-back 
-           is present when we click either next or previous */
-        justFlippedRight = true;
-
-    }
-    
-    
-  })
+        
+    })
   
 
     prevLink.addEventListener('click', function() {
         if (count > 0) {
             /* as long as we are not on the first page */
 
-            if (justFlippedRight) {
-                /* get the #flip element */
-
+            if (flipIdExists) {
                 var flip = document.getElementById('flip');
-                var left = document.getElementById('left');
-                left.setAttribute('class', 'left'+count);
-
             } else {
+                /* #flip doesn't exist, so get #flip-back instead */
                 var flip = document.getElementById('flip-back');
             }
 
@@ -93,34 +60,25 @@ window.onload = function() {
             flip.id = 'flip-back';
             flip.setAttribute('class', 'flip-on-click');
 
-            /* start a shadow on the right */
-            var right = document.getElementById('right');
-            right.className = "";
-            right.setAttribute('class', 'shadow-right');
-
             /* replace in js so animation can rerun */
             var elm = flip;
             var newone = elm.cloneNode(true);
             elm.parentNode.replaceChild(newone, elm);
 
-            /* decrement for the previous page */
+            /* decrement so we get the right count for the previous page */
             count = count-1;
 
-            var front = document.getElementById('front');
-            var right = document.getElementById('right');
-            var left = document.getElementById('left');
-            var back = document.getElementById('back');
+            /* reassign images for the next flip */
+            /* Take note that when we hit previous to flip-back, the front and back images get switched!! 
+                We apply classes accordingly */
+            document.getElementById('left').setAttribute('class', 'left'+count);
+            document.getElementById('front').setAttribute('class', 'back'+count);
+            document.getElementById('back').setAttribute('class', 'front'+count);
+            document.getElementById('right').setAttribute('class', 'right'+count);
 
-            /* replace with new images */
-
-            front.setAttribute('class', 'back'+count);
-            right.className += ' right'+count;
-            left.setAttribute('class', 'left'+count);
-            back.setAttribute('class', 'front'+count);
-
-            justFlippedRight = false;
+            /* This boolean helps us keep track if #flip OR #flip-back exists */
+            flipIdExists = false;
         }
     })
-
 
 }
