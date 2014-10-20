@@ -3,6 +3,10 @@
 $pageWidth: 290px
 $pageHeight: 450px
 $top: 20%
+$black: #000
+$white: #FFF
+$orange: #EA7A15
+$beige: #F5F4F1
 
 $mainFont: 'Lato', sans-serif
 
@@ -14,15 +18,12 @@ $mainFont: 'Lato', sans-serif
     -webkit-transform: $transforms
     transform: $transforms
 
-
-
 @mixin transform-style($style)
     -moz-transform-style: $style
     -o-transform-style: $style
     -ms-transform-style: $style
     -webkit-transform-style: $style
     transform-style: $style
-
 
 @mixin transform-origin($origin)
     -webkit-transform-origin: $origin
@@ -44,6 +45,38 @@ $mainFont: 'Lato', sans-serif
     -ms-animation-fill-mode: $mode
     -webkit-animation-fill-mode: $mode
     animation-fill-mode: $mode
+
+@mixin transition($transition)
+    -moz-transition: $transition
+    -o-transition: $transition
+    -ms-transition: $transition
+    -webkit-transition: $transition
+    transition: $transition
+
+@-webkit-keyframes shift
+    50%
+        transform: translate(5px, 0)
+
+@-moz-keyframes shift
+    50% 
+        transform: translate(5px, 0)
+
+@keyframes shift
+    50% 
+        transform: translate(5px, 0)
+
+@-webkit-keyframes jump
+    50% 
+        transform: translate(0, 5px)
+
+@-moz-keyframes jump
+    50% 
+        transform: translate(0, 5px)
+
+@keyframes jump
+    50% 
+        transform: translate(0, 5px)
+
 
 
 @-webkit-keyframes flip
@@ -98,7 +131,6 @@ $mainFont: 'Lato', sans-serif
 
 html,body 
     height: 100%
-    overflow: hidden
     margin: 0
     padding: 0
 
@@ -109,17 +141,171 @@ body
     font-weight: 300
 
 
-.flip-links 
-    margin: 0 auto
+#intro
     position: relative
+    margin: 0 auto
+    text-align: center
+    background-color: $orange
+    height: 95%
+    color: $white
+    padding-top: 30px
+    font-weight: 300
+
+    h1
+        font-weight: 400
+
+    a
+        color: $white
+        font-weight: 300
+        opacity: .5
+
+        &:hover
+            opacity: 1
+
+
+#who
+    padding: 100px 20%
+
+    h1
+        text-align: center
+        color: $orange
+
+#bio
+    width: 600px
+    margin: 0 auto
+
+    h1
+        margin-top: 0
+        margin-bottom: 10px
+
+img.mix
     width: 300px
+    height: auto
+
+img.me
+    width: 100%
+    height: auto
+    z-index: -100
+
+#what
+    background-color: $beige
+    padding: 50px 20%
+
+    #resume
+        width: 600px
+        margin: 0 auto
+
+    h1
+        margin-top: 0
+        color: $orange
+
+    h5
+        font-weight: 400
+        margin-bottom: 0
+
+    h4
+        margin-bottom: 0px
+
+    p
+        margin-bottom: 30px
+
+#back-link
+    position: absolute
+    top: $pageHeight/2
+    left: -30%
+    display: none
+
+#next-link
+    position: absolute
+    top: $pageHeight/2
+    right: -30%
+    @include animation(shift 1s ease-in-out infinite)
+
+#more-link
+    margin-top: -50px
+    position: absolute
+    bottom: 20px
+    left: 50%
+    width: 50px
+    margin-left: -25px
+    cursor: pointer
+    @include animation(jump 1s ease-in-out infinite)
+
+    display: none
+
+
+.flip-link:hover
+    color: $white
+    cursor: pointer
+    @include transition(all .2s)
+
+#contact
+    position: relative
+    text-align: center
+    margin: 200px 0
+
+    h1
+        margin-top: 0
+
+    ul
+        padding-left: 0
+        margin-top: 30px
+
+        li
+            display: inline-block
+            margin-right: 50px
+            font-size: .9em
+
+            &:last-child
+                margin-right: 0
+
+#credit
+    display: block
+    text-align: center
+    color: $white
+    background-color: $orange
+    padding: 50px 0 
+
+    a
+        color: $white
+        font-weight: 400
+
+    h5:first-child
+        margin-top: 0
+
+a
+    font-weight: 700
+    text-decoration: none
+    color: $black
+    @include transition(all .2s)
+
+    &:hover
+        color: $orange
+        @include transition(all .2s)
+
+h1
+    font-size: 2em
+    font-weight: 300
     text-align: center
 
+h2
+    font-size: 1.2em
+    text-align: center
 
-.flip-links a 
-    cursor: pointer
+h3
+    margin-bottom: 0
 
+h4
+    margin-top: 0
 
+h5 
+    font-size: .9em
+    font-weight: 300
+    text-align: center
+    margin-bottom: 0
+
+p
+    line-height: 1.4em
 
 .made 
     width: 500px
@@ -129,31 +315,15 @@ body
     text-align: center
     bottom: 10%
 
-
-h5 
-    font-weight: 300
-
-
-a 
-    color: #000
-    font-weight: 400
-    text-decoration: none
-
-
-a:hover 
-    color: blue
-
-
-.cover 
-    height: $pageHeight
-    width: $pageWidth * 2
+#cover 
+    height: $pageHeight + 20
+    width: $pageWidth * 2 + 20
     position: absolute
     left: 50%
-    margin-left: -256px
-    top: 29%
+    margin-left: -$pageWidth - 10
+    top: $top - 1%
     background-color: #000
     border-radius: 5px
-
 
 #flip 
     height: $pageHeight
@@ -164,7 +334,6 @@ a:hover
 
     @include transform-style(preserve-3d)
 
-
 #flip.flip-on-click 
     @include animation(flip 2s ease-in-out 1)
     height: $pageHeight
@@ -173,7 +342,6 @@ a:hover
     @include transform-origin(0 0 0)
     @include transform-style(preserve-3d)
     @include animation-fill-mode(forwards)
-
 
 #flip-back 
     height: $pageHeight
@@ -184,7 +352,6 @@ a:hover
     top: $top
 
     @include transform-style(preserve-3d)
-
 
 #flip-back.flip-on-click 
     @include animation(flip-back 2s ease-in-out 1)
@@ -197,8 +364,6 @@ a:hover
     @include transform-origin($pageWidth 0 0)
     @include animation-fill-mode(forwards)
 
-
-
 #flip div 
     height: $pageHeight
     width: $pageWidth
@@ -208,7 +373,6 @@ a:hover
     @include transform-origin(0 100%)
     @include transform-style(preserve-3d)
     background-size: $pageWidth $pageHeight
-
 
 #flip-back div 
     height: $pageHeight
@@ -221,8 +385,6 @@ a:hover
     @include transform-style(preserve-3d)
     background-size: $pageWidth $pageHeight
 
-
-
 #book-left 
     height: $pageHeight
     width: $pageWidth
@@ -233,8 +395,6 @@ a:hover
 
     @include transform-style(preserve-3d)
     @include transform-origin(0 0 0)
-
-
 
 #book-left #left 
     height: $pageHeight
@@ -248,8 +408,7 @@ a:hover
     filter: FlipH
     -ms-filter: "FlipH"
 
-
-#book 
+#book-right
     height: $pageHeight
     width: $pageWidth
     position: absolute
@@ -259,7 +418,7 @@ a:hover
     @include transform-style(preserve-3d)
     @include transform-origin(0 0 0)
 
-#book #right 
+#book-right #right 
     height: $pageHeight
     width: $pageWidth
     background-size: 100% 100%
@@ -274,16 +433,6 @@ a:hover
 #flip #back 
     transform: rotateY(.2deg) 
 
-h4 
-    position: absolute
-    bottom: 20px
-    left: 20px
-    margin: 0
-    font-weight: 200
-    opacity: 1
-    font-family: sans-serif
-    color: rgba(0,0,0,0.3) 
-
 .next 
     position: absolute
     bottom: 20px
@@ -294,9 +443,8 @@ h4
     color: rgba(0,0,0,0.3)
     text-decoration: none
 
-.next:hover 
+.flip-link:hover
     opacity: 1
-
 
 #flip-back #front 
     @include transform(scaleX(-1))
@@ -304,30 +452,16 @@ h4
     filter: FlipH
     -ms-filter: "FlipH"
 
-
 #flip-back #back 
     @include transform(scaleX(-1) rotateY(.2deg))
     filter: FlipH
     -ms-filter: "FlipH"
 
-
-
-
-
-.left0 
-    background-image: url(../sketches/sketch1-1.png)
-
-.front0 
-    background-image: url(../sketches/sketch1-2.png)
-
-.back0, 
 .left1 
     background-image: url(../sketches/sketch2-1.png) 
 
-.right0, 
 .front1 
     background-image: url(../sketches/sketch2-2.png)
-
 
 .back1, 
 .left2 
@@ -436,3 +570,14 @@ h4
 .right13 
     background-image: url(../sketches/sketch15-2.png)
 
+
+@media screen and (max-width: 800px)
+    #who,
+    #what
+        padding: 100px 5%
+
+    #bio
+        width: 95%
+
+    #what #resume
+        width: 95%
